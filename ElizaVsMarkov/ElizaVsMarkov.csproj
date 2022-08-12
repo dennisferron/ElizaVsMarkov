@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\craiyon_154508_A_man_whispering_to_a_robot__br_.png" />
+    <None Remove="Images\craiyon_164350_Icon__right_arrow__br_.png" />
+    <None Remove="Images\craiyon_165216_A_group_of_emojis__br_.png" />
+    <None Remove="Images\ELIZA.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ELIZA.NET\ELIZA.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\craiyon_154508_A_man_whispering_to_a_robot__br_.png" />
+    <Resource Include="Images\craiyon_164350_Icon__right_arrow__br_.png" />
+    <Resource Include="Images\craiyon_165216_A_group_of_emojis__br_.png" />
+    <Resource Include="Images\ELIZA.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

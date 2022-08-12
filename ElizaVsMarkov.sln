@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElizaVsMarkov", "ElizaVsMarkov.csproj", "{1EC5C5A2-6521-4125-A000-5D3118CAEEC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELIZA.NET", "ELIZA.NET\ELIZA.NET.csproj", "{9F0CBBA1-9F28-4B6E-A224-B7A7AC1DE428}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElizaVsMarkov", "ElizaVsMarkov\ElizaVsMarkov.csproj", "{289AD47B-3828-4C8B-93B7-7CA24D64A959}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1EC5C5A2-6521-4125-A000-5D3118CAEEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EC5C5A2-6521-4125-A000-5D3118CAEEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EC5C5A2-6521-4125-A000-5D3118CAEEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EC5C5A2-6521-4125-A000-5D3118CAEEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0CBBA1-9F28-4B6E-A224-B7A7AC1DE428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0CBBA1-9F28-4B6E-A224-B7A7AC1DE428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0CBBA1-9F28-4B6E-A224-B7A7AC1DE428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0CBBA1-9F28-4B6E-A224-B7A7AC1DE428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289AD47B-3828-4C8B-93B7-7CA24D64A959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289AD47B-3828-4C8B-93B7-7CA24D64A959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289AD47B-3828-4C8B-93B7-7CA24D64A959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289AD47B-3828-4C8B-93B7-7CA24D64A959}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

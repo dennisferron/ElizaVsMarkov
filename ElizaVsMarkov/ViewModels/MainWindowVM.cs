@@ -13,6 +13,7 @@ namespace ElizaVsMarkov.ViewModels
     public class MainWindowVM : ViewModelBase
     {
         private ELIZALib eliza = null;
+        private Markov.Generator markov = new Markov.Generator();
 
         public MainWindowVM(string elizaScriptFile, string markovCorpusFile)
         {
@@ -53,7 +54,7 @@ namespace ElizaVsMarkov.ViewModels
         public void SendSuggestionText()
         {
             AddToLog("Suggestion", SuggestionText);
-            string markovResult = SuggestionText;
+            string markovResult = markov.RespondTo(SuggestionText);
             AddToLog("Simple Markov", markovResult);
             SuggestionText = "";
             string elizaResult = eliza.GetResponse(markovResult);

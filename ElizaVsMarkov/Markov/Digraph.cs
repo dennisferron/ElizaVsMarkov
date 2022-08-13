@@ -18,7 +18,10 @@ namespace ElizaVsMarkov.Markov
         {
             if (links.TryGetValue(source, out var edges))
             {
-                edges[target] += weight;
+                if (edges.TryGetValue(target, out var old_weight))
+                    edges[target] = old_weight + weight;
+                else
+                    edges[target] = weight;
             }
             else
             {

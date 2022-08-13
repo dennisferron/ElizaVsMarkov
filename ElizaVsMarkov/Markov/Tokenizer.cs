@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ElizaVsMarkov.Markov
 {
-    internal class WordList
+    internal class Tokenizer
     {
         private List<string> indexToWord = new List<string>();
         private Dictionary<string, int> wordToIndex = new Dictionary<string, int>();
 
-        public WordList()
+        public Tokenizer()
         {
             // Index 0 is a sentinel for sentence start and end.
             indexToWord.Add("<START/STOP>");
@@ -33,8 +33,10 @@ namespace ElizaVsMarkov.Markov
             }
         }
 
-        public IEnumerable<int> Tokenize(IEnumerable<string> sentence)
+        public IEnumerable<int> Tokenize(string input)
         {
+            var sentence = input.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
             foreach (string word in sentence)
                 yield return AddWord(word);
         }
@@ -47,10 +49,22 @@ namespace ElizaVsMarkov.Markov
             return indexToWord[token];
         }
 
-        public IEnumerable<string> Detokenize(IEnumerable<int> sequence)
+        public string Detokenize(IEnumerable<int> sequence)
         {
+            StringBuilder sb = new StringBuilder();
+
+            bool empty = true;
+
             foreach (int token in sequence)
-                yield return GetWord(token);
+            {
+                if (!empty)
+                    sb.Append(" ");
+
+                sb.Append(GetWord(token));
+                empty = false;
+            }
+
+            return sb.ToString();
         }
     }
 }

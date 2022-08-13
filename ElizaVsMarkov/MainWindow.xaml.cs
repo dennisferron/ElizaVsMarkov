@@ -36,6 +36,7 @@ namespace ElizaVsMarkov
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.SendSuggestionText();
+            chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -43,6 +44,7 @@ namespace ElizaVsMarkov
             if (e.Key == Key.Return)
             {
                 viewModel.SendSuggestionText();
+                chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
             }
         }
     }

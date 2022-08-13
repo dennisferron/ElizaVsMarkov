@@ -62,7 +62,7 @@ namespace ElizaVsMarkov.ViewModels
         public void SendSuggestionText()
         {
             AddToLog("Human", SuggestionText);
-            string markovResult = markov.RespondTo(SuggestionText);
+            string markovResult = markov.RespondTo(SuggestionText??"");
             AddToLog("Markov", markovResult);
             SuggestionText = "";
             string elizaResult = eliza.GetResponse(markovResult);

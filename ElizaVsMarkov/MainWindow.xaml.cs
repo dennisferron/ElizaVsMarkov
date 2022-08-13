@@ -35,7 +35,15 @@ namespace ElizaVsMarkov
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.SendClick();
+            viewModel.SendSuggestionText();
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                viewModel.SendSuggestionText();
+            }
         }
     }
 }

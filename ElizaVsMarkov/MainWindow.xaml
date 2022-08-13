@@ -60,7 +60,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Text="{Binding SuggestionText}" Grid.Column="0" TextWrapping="Wrap" />
+                <TextBox Name="SuggestionText" Text="{Binding Path=SuggestionText,UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TextWrapping="Wrap" KeyDown="TextBox_KeyDown" />
                 <Button Grid.Column="1" Content="Send" Width="80" Margin="2,2,2,2" Click="SendButton_Click" />
             </Grid>
             <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="Rate this interaction to let Simple Markov know how he did." />

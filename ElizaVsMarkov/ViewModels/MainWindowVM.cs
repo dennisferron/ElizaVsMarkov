@@ -50,7 +50,7 @@ namespace ElizaVsMarkov.ViewModels
         public ObservableCollection<ChatMessageVM> ChatLog
         { get; set; } = new ObservableCollection<ChatMessageVM>();
 
-        public void SendClick()
+        public void SendSuggestionText()
         {
             AddToLog("Suggestion", SuggestionText);
             string markovResult = SuggestionText;

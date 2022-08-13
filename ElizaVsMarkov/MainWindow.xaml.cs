@@ -28,7 +28,7 @@ namespace ElizaVsMarkov
             InitializeComponent();
             viewModel = new MainWindowVM(
                 "DOCTOR.json",
-                "At_the_Mountains_of_Madness-Lovecraft.txt"
+                "Corpus\\training.txt"
             );
             DataContext = viewModel;
         }

@@ -22,6 +22,14 @@ namespace ElizaVsMarkov.ViewModels
 
             // Start (TODO: Let tutorial invoke this.)
             AddToLog("ELIZA", eliza.Session.GetGreeting());
+
+            var start = DateTime.Now;
+            string[] training = File.ReadAllLines(markovCorpusFile);
+            foreach (var line in training)
+                markov.Learn(line, 0.002);
+            var end = DateTime.Now;
+            var span = end - start;
+            AddToLog("System", String.Format("Loaded Markov training data in {0} seconds", span.TotalSeconds));
         }
 
         private void AddToLog(string user, string message)
@@ -53,9 +61,9 @@ namespace ElizaVsMarkov.ViewModels
 
         public void SendSuggestionText()
         {
-            AddToLog("Suggestion", SuggestionText);
+            AddToLog("Human", SuggestionText);
             string markovResult = markov.RespondTo(SuggestionText);
-            AddToLog("Simple Markov", markovResult);
+            AddToLog("Markov", markovResult);
             SuggestionText = "";
             string elizaResult = eliza.GetResponse(markovResult);
             AddToLog("ELIZA", elizaResult);

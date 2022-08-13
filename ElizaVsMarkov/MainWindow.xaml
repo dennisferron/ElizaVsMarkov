@@ -23,14 +23,19 @@
         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Content="Simple Markov" />
         <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="2" Source="pack://application:,,,/Images/ELIZA.gif" />
         <Label Content="ELIZA" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" />
-        <ListBox ItemsSource="{Binding ChatLog}" Grid.Column="1" Grid.RowSpan="3" BorderBrush="Gray" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListBox ItemsSource="{Binding ChatLog}" Grid.Column="1" Grid.RowSpan="3" BorderBrush="Gray" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding User}" />
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Message}" Background="Beige" />
-                        <Label Content="TODO: Emoji" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="40" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding User}" />
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{Binding Message}" Background="Beige" />
+                        <Label Grid.Column="2" Content="TODO: Emoji" />
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -29,6 +29,9 @@
 
   <ItemGroup>
     <None Update="Corpus\At_the_Mountains_of_Madness-Lovecraft.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Corpus\training.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

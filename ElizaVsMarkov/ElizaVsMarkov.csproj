@@ -27,4 +27,10 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Corpus\At_the_Mountains_of_Madness-Lovecraft.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

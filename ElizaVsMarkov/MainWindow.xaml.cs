@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElizaVsMarkov.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,21 @@ namespace ElizaVsMarkov
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowVM viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+            viewModel = new MainWindowVM(
+                "DOCTOR.json",
+                "At_the_Mountains_of_Madness-Lovecraft.txt"
+            );
+            DataContext = viewModel;
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.SendClick();
         }
     }
 }

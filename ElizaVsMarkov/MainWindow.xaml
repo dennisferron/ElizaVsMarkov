@@ -23,7 +23,16 @@
         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Content="Simple Markov" />
         <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="2" Source="pack://application:,,,/Images/ELIZA.gif" />
         <Label Content="ELIZA" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" />
-        <ListBox Grid.Column="1" Grid.RowSpan="3" BorderBrush="Gray" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListBox ItemsSource="{Binding ChatLog}" Grid.Column="1" Grid.RowSpan="3" BorderBrush="Gray" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding User}" />
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Message}" Background="Beige" />
+                        <Label Content="TODO: Emoji" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Line Grid.Row="3" Grid.ColumnSpan="3" Margin="8,8,8,4" Stretch="Fill" Stroke="LightGray" X2="1"/>
         <Grid Grid.Row="4" Grid.ColumnSpan="3" Margin="2,4,2,4">
@@ -51,14 +60,14 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" TextWrapping="Wrap" />
-                <Button Grid.Column="1" Content="Send" Width="80" Margin="2,2,2,2" />
+                <TextBox Text="{Binding SuggestionText}" Grid.Column="0" TextWrapping="Wrap" />
+                <Button Grid.Column="1" Content="Send" Width="80" Margin="2,2,2,2" Click="SendButton_Click" />
             </Grid>
             <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="Rate this interaction to let Simple Markov know how he did." />
             <StackPanel Grid.Row="1" Grid.Column="2" Margin="40,0,0,0" Orientation="Horizontal" >
                 <Button Margin="4,4,4,4" Width="60" Content="Love It" />
                 <Button Margin="4,4,4,4" Width="60" Content="Hilarious" />
-                <Button Margin="4,4,4,4" Width="60" Content="Not Bad" />
+                <Button Margin="4,4,4,4" Width="60" Content="Meh" />
                 <Button Margin="4,4,4,4" Width="60" Content="Crying" />
                 <Button Margin="4,4,4,4" Width="60" Content="WTF?" />
             </StackPanel>

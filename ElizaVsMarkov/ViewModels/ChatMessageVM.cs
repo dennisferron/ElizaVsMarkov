@@ -47,5 +47,18 @@ namespace ElizaVsMarkov.ViewModels
             set { _reaction = value; }
         }
 
+        public string EmojiImage
+        {
+            get
+            {
+                switch (Reaction)
+                {
+                    case Reactions.Meh:
+                        return "Images/craiyon_184522_Disinterested_emoji__br_.png";
+                    default:
+                        return "";
+                }
+            }
+        }
     }
 }

@@ -38,8 +38,8 @@ namespace ElizaVsMarkov.ViewModels
             {
                 User = user,
                 Message = message,
-                Reaction = Reactions.None
-            });
+                Reaction = ChatLog.Count % 2 == 0 ? Reactions.None : Reactions.Meh
+            }); 
         }
 
         private string _suggestionText;

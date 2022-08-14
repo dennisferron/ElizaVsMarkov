@@ -8,6 +8,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
+
+        <BeginStoryboard x:Key="BottomPanelStoryboardDown">
+        <Storyboard >
+            <DoubleAnimation
+                                    Storyboard.Target="{Binding .}" 
+                                    Storyboard.TargetProperty="ScrollOffset"
+                                    From="0.0" To="100.0" Duration="0:0:0.5"                               
+                                />
+        </Storyboard>
+        </BeginStoryboard>
+
+        <BeginStoryboard x:Key="BottomPanelStoryboardUp">
+            <Storyboard >
+            <DoubleAnimation
+                                    Storyboard.Target="{Binding .}" 
+                                    Storyboard.TargetProperty="ScrollOffset"
+                                    From="100.0" To="0.0" Duration="0:0:0.5"                               
+                                />
+        </Storyboard>
+        </BeginStoryboard>
+
         <DataTemplate x:Key="DefaultContent" DataType="{x:Type viewmodels:ChatMessageVM}">
             <Grid Background="DarkGray">
                 <Grid.ColumnDefinitions>
@@ -20,29 +41,73 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ELIZAMessage" DataType="{x:Type viewmodels:ChatMessageVM}">
-            <Grid HorizontalAlignment="Right" Background="PapayaWhip">
+            <Grid Name="ChatMessageGrid"  HorizontalAlignment="Right" Background="PapayaWhip">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="{Binding User}" />
-                <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Message}"  />
+                <TextBlock Name="ChatMessageTextBlock" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Message}"  />
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard Name="ElizaMessageStoryboard" Completed="ElizaMessageStoryboard_Completed">
+                                <DoubleAnimation
+                                    Storyboard.TargetName="ChatMessageGrid" 
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.0" To="1.0" Duration="0:0:2.5"                                     
+                                />
+                                <StringAnimationUsingKeyFrames 
+                Storyboard.TargetName="ChatMessageTextBlock" Storyboard.TargetProperty="(TextBlock.Text)"
+                Duration="0:0:0.6" FillBehavior="HoldEnd" RepeatBehavior="3x" >
+
+                                    <!-- All the key frames below are DiscreteStringKeyFrames. Discrete key frames create 
+                sudden "jumps" between values (no interpolation). Only discrete key frames can be used 
+                for String key frame animations. -->
+                                    <DiscreteStringKeyFrame Value="" KeyTime="0:0:0" />
+                                    <DiscreteStringKeyFrame Value="." KeyTime="0:0:0.15" />
+                                    <DiscreteStringKeyFrame Value=".." KeyTime="0:0:0.30" />
+                                    <DiscreteStringKeyFrame Value="..." KeyTime="0:0:0.45" />
+                                    <DiscreteStringKeyFrame Value="{Binding Message}" KeyTime="0:0:0.6" />
+                                </StringAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="HumanMessage">
-            <Grid Background="WhiteSmoke" HorizontalAlignment="Left">
+            <Grid Name="ChatMessageGrid" Background="WhiteSmoke" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="{Binding User}" Foreground="DarkGray" />
-                <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Message}" Foreground="Gray" />
+                <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding AnimatedMessage}" Foreground="Gray" />
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard Name="HumanMessageStoryboard" Completed="HumanMessageStoryboard_Completed">
+                                <DoubleAnimation
+                                    Storyboard.TargetName="ChatMessageGrid" 
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.0" To="1.0" Duration="0:0:0.6"                                     
+                                />
+                                <DoubleAnimation
+                                    Storyboard.Target="{Binding .}" 
+                                    Storyboard.TargetProperty="TypingProgress"
+                                    From="0.0" To="1.0" Duration="0:0:0.6"                                     
+                                />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="MarkovMessage" DataType="{x:Type viewmodels:ChatMessageVM}">
-            <Grid HorizontalAlignment="Left">
+            <Grid  Name="ChatMessageGrid" HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
@@ -53,9 +118,27 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="{Binding User}" />
-                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Message}"  />
+                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding AnimatedMessage}"  />
                 </Grid>
                 <Image VerticalAlignment="Bottom" Margin="4,0,0,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Width="32" Height="32" Source="{Binding EmojiImage}" />
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Grid.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard Name="MarkovMessageStoryboard" Completed="MarkovMessageStoryboard_Completed">
+                                <DoubleAnimation
+                                    Storyboard.TargetName="ChatMessageGrid" 
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.0" To="1.0" Duration="0:0:1.6"                                     
+                                />
+                                <DoubleAnimation
+                                    Storyboard.Target="{Binding .}" 
+                                    Storyboard.TargetProperty="TypingProgress"
+                                    From="0.0" To="1.0" Duration="{Binding TypingAnimationTime}"                                     
+                                />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
             </Grid>
         </DataTemplate>
 
@@ -104,44 +187,64 @@
             </ListView.ItemContainerStyle>
         </ListView>
         <Line Grid.Row="3" Grid.ColumnSpan="2" Margin="8,8,8,4" Stretch="Fill" Stroke="LightGray" X2="1"/>
-        <Grid Grid.Row="4" Grid.ColumnSpan="2" Margin="2,4,2,4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <RibbonRadioButton Grid.Column="0" Grid.Row="0" Label="Suggest" ToolTip="Enter a sentence to advise Simple Markov what to say to ELIZA."
-                          SmallImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png" 
-                          LargeImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png"
-                          KeyTip="Suggest" />
-            <RibbonRadioButton Grid.Column="0" Grid.Row="1" Label="Feedback" 
-                          SmallImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png" 
-                          LargeImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png"
-                          KeyTip="Feedback" />
+        <ScrollViewer Name="BottomPanelScrollViewer" Grid.Row="4" Grid.ColumnSpan="2" Margin="2,4,2,4" Height="100" VerticalScrollBarVisibility="Hidden" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="100" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                        <RibbonRadioButton Grid.Column="0" Grid.Row="1" Label="Suggest" 
+                              SmallImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png" 
+                              LargeImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png"
+                              KeyTip="Suggest" />
 
-            <Grid Grid.Row="0" Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox Name="SuggestionText" Text="{Binding Path=SuggestionText,UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TextWrapping="Wrap" KeyDown="TextBox_KeyDown" />
-                <Button Grid.Column="1" Content="Send" Width="80" Margin="2,2,2,2" Click="SendButton_Click" />
+                        <Label Grid.Row="0" Grid.Column="1" Content="Type a sentence to whisper to Simple Markov to suggest a reply to ELIZA." />
+                    <TextBox Grid.Column="1" Grid.Row="1" Name="SuggestionText" Text="{Binding Path=SuggestionText,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" KeyDown="TextBox_KeyDown" />
+                    <Button Grid.Row="1" Grid.Column="2" Content="Send" Width="60" Margin="2,2,2,2" Click="SendButton_Click" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <RibbonRadioButton Grid.Column="0" Grid.Row="1" Label="Feedback" 
+                              SmallImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png" 
+                              LargeImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png"
+                              KeyTip="Feedback" />
+
+                        <Label Grid.Row="0" Grid.Column="1" Content="Select a reaction to let Simple Markov know how (in)appropriate its response was." />
+                    <ListBox Name="ReactionBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" ItemsSource="{Binding ReactionButtons}" SelectedItem="{Binding SelectedReaction}" KeyDown="ReactionBox_KeyDown">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImageFile}" Height="64" Width="64"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+
+                        <Button Grid.Row="1" Grid.Column="2" Content="Rate" Width="60" Margin="2,2,2,2" Click="RateButton_Click" />
+                </Grid>
             </Grid>
-            <ListBox Name="ReactionBox" Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" ItemsSource="{Binding ReactionButtons}" SelectedItem="{Binding SelectedReaction}" KeyDown="ReactionBox_KeyDown">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding ImageFile}" Height="64" Width="64"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-        </Grid>            
+        </ScrollViewer>
     </Grid>
 </Window>

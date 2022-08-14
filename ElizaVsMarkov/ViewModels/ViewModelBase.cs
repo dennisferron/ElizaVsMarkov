@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ElizaVsMarkov.ViewModels
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : System.Windows.DependencyObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ELIZA.NET;
 using ElizaVsMarkov.Model;
 
@@ -68,12 +69,10 @@ namespace ElizaVsMarkov.ViewModels
 
         public void SendSuggestionText()
         {
+            BottomPanelMode = (BottomPanelMode + 1) % 2;
+
             AddToLog("Human", SuggestionText);
-            string markovResult = markov.RespondTo(SuggestionText??"");
-            AddToLog("Markov", markovResult);
             SuggestionText = "";
-            string elizaResult = eliza.GetResponse(markovResult);
-            AddToLog("ELIZA", elizaResult);
         }
 
         public List<ReactionVM> ReactionButtons
@@ -102,5 +101,59 @@ namespace ElizaVsMarkov.ViewModels
             if (messageVM != null)
                 messageVM.Reaction = SelectedReaction;
         }
+
+        public void MarkovMessageCompleted()
+        {
+            string markovResult = ChatLog.LastOrDefault(a => a.User == "Markov")?.Message ?? "";
+            string elizaResult = eliza.GetResponse(markovResult);
+            AddToLog("ELIZA", elizaResult);
+        }
+
+        public void ElizaMessageCompleted()
+        {
+        }
+
+        public void HumanMessageCompleted()
+        {
+            string suggestionText = ChatLog.LastOrDefault(a => a.User == "Human")?.Message ?? "";
+            string markovResult = markov.RespondTo(SuggestionText ?? "");
+            AddToLog("Markov", markovResult);
+        }
+
+        public static readonly DependencyProperty ScrollOffsetProperty =
+           DependencyProperty.Register("ScrollOffset", typeof(double), typeof(MainWindowVM),
+           new FrameworkPropertyMetadata(0.0, new PropertyChangedCallback(OnScrollOffsetChanged)));
+
+        // Check MainWindow.xaml.cs property change event if changing the name of this.
+        public double ScrollOffset
+        {
+            get { return (double)GetValue(ScrollOffsetProperty); }
+            set { SetValue(ScrollOffsetProperty, value); }
+        }
+
+        private static void OnScrollOffsetChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            MainWindowVM myObj = obj as MainWindowVM;
+
+            // Handled by MainWindow.xaml.cs because it needs reference to scroll viewer UI element.
+            if (myObj != null)
+                myObj.NotifyPropertyChanged("ScrollOffset");
+        }
+
+        private int bottomPanelMode;
+
+        public int BottomPanelMode
+        {
+            get { return bottomPanelMode; }
+            set 
+            {
+                if (bottomPanelMode != value)
+                {
+                    bottomPanelMode = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
     }
 }

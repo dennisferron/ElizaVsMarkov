@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ElizaVsMarkov.ViewModels
 {
@@ -60,6 +61,55 @@ namespace ElizaVsMarkov.ViewModels
             get
             {
                 return Reaction?.ImageFile;
+            }
+        }
+
+        private double _typingProgress = 0.0;
+
+        public string AnimatedMessage
+        {
+            get
+            {
+                if (Message == null)
+                    return "";
+                else
+                {
+                    int numLetters = Convert.ToInt32(Message.Length * TypingProgress);
+                    return Message.Substring(0, numLetters);
+                }
+            }
+        }
+
+
+        public double TypingProgress
+        {
+            get { return (double)GetValue(TypingProgressProperty); }
+            set { SetValue(TypingProgressProperty, value); }
+        }
+        public static readonly DependencyProperty TypingProgressProperty =
+            DependencyProperty.Register("TypingProgress", typeof(double), typeof(ChatMessageVM), new PropertyMetadata(0D, OnTypingProgressChangedCallBack)
+           );
+
+        private static void OnTypingProgressChangedCallBack(
+                DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            ChatMessageVM c = sender as ChatMessageVM;
+            if (c != null)
+            {
+                c.OnTypingProgressChanged();
+            }
+        }
+
+        protected virtual void OnTypingProgressChanged()
+        {
+            NotifyPropertyChanged("AnimatedMessage");
+        }
+
+        public string TypingAnimationTime 
+        { 
+            get 
+            {
+                return string.Format("0:0:{0}", 0.06 * _message.Length);
             }
         }
     }

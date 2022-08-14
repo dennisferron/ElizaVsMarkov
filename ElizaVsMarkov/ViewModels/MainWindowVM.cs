@@ -40,13 +40,11 @@ namespace ElizaVsMarkov.ViewModels
 
         private void AddToLog(string user, string message)
         {
-            var reaction = ReactionButtons[ChatLog.Count % 5];
-
             ChatLog.Add(new ChatMessageVM
             {
                 User = user,
                 Message = message,
-                Reaction = reaction
+                Reaction = null
             }); 
         }
 
@@ -69,8 +67,6 @@ namespace ElizaVsMarkov.ViewModels
 
         public void SendSuggestionText()
         {
-            BottomPanelMode = (BottomPanelMode + 1) % 2;
-
             AddToLog("Human", SuggestionText);
             SuggestionText = "";
         }
@@ -100,17 +96,26 @@ namespace ElizaVsMarkov.ViewModels
 
             if (messageVM != null)
                 messageVM.Reaction = SelectedReaction;
+
+            // TODO: Add animation to trigger this.
+            ReactionCompleted();
         }
 
-        public void MarkovMessageCompleted()
+        public void ReactionCompleted()
         {
             string markovResult = ChatLog.LastOrDefault(a => a.User == "Markov")?.Message ?? "";
             string elizaResult = eliza.GetResponse(markovResult);
             AddToLog("ELIZA", elizaResult);
         }
 
+        public void MarkovMessageCompleted()
+        {
+            BottomPanelMode = 1;
+        }
+
         public void ElizaMessageCompleted()
         {
+            BottomPanelMode = 0;
         }
 
         public void HumanMessageCompleted()

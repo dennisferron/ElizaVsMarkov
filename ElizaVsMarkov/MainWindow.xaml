@@ -10,7 +10,7 @@
     <Window.Resources>
 
         <BeginStoryboard x:Key="BottomPanelStoryboardDown">
-        <Storyboard >
+        <Storyboard Name="BottomPanelDown" >
             <DoubleAnimation
                                     Storyboard.Target="{Binding .}" 
                                     Storyboard.TargetProperty="ScrollOffset"
@@ -20,7 +20,7 @@
         </BeginStoryboard>
 
         <BeginStoryboard x:Key="BottomPanelStoryboardUp">
-            <Storyboard >
+            <Storyboard Name="BottomPanelUp">
             <DoubleAnimation
                                     Storyboard.Target="{Binding .}" 
                                     Storyboard.TargetProperty="ScrollOffset"

@@ -39,25 +39,27 @@ namespace ElizaVsMarkov.ViewModels
             }
         }
 
-        private Reactions _reaction;
+        private ReactionVM _reaction;
 
-        public Reactions Reaction
+        public ReactionVM Reaction
         {
             get { return _reaction; }
-            set { _reaction = value; }
+            set 
+            {
+                if (_reaction != value)
+                {
+                    _reaction = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("EmojiImage");
+                }
+            }
         }
 
         public string EmojiImage
         {
             get
             {
-                switch (Reaction)
-                {
-                    case Reactions.Meh:
-                        return "Images/craiyon_184522_Disinterested_emoji__br_.png";
-                    default:
-                        return "";
-                }
+                return Reaction?.ImageFile;
             }
         }
     }

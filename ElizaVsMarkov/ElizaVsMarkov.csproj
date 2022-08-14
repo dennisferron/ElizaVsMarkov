@@ -12,6 +12,10 @@
     <None Remove="Images\craiyon_164350_Icon__right_arrow__br_.png" />
     <None Remove="Images\craiyon_165216_A_group_of_emojis__br_.png" />
     <None Remove="Images\craiyon_184522_Disinterested_emoji__br_.png" />
+    <None Remove="Images\craiyon_190726_LoveIt_emoji__br_.png" />
+    <None Remove="Images\craiyon_190753_Shock_emoji__br_.png" />
+    <None Remove="Images\craiyon_200016_crying_emoji_br_.png" />
+    <None Remove="Images\craiyon_200908_laughin_emoji_br_.png" />
     <None Remove="Images\ELIZA.gif" />
   </ItemGroup>
 
@@ -24,8 +28,12 @@
     <Resource Include="Images\craiyon_164350_Icon__right_arrow__br_.png" />
     <Resource Include="Images\craiyon_165216_A_group_of_emojis__br_.png" />
     <Resource Include="Images\craiyon_184522_Disinterested_emoji__br_.png" />
+    <Resource Include="Images\craiyon_190726_LoveIt_emoji__br_.png" />
+    <Resource Include="Images\craiyon_190753_Shock_emoji__br_.png" />
+    <Resource Include="Images\craiyon_200016_crying_emoji_br_.png" />
+    <Resource Include="Images\craiyon_200908_laughin_emoji_br_.png" />
     <Resource Include="Images\ELIZA.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 

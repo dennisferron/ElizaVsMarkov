@@ -103,15 +103,14 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <Line Grid.Row="3" Grid.ColumnSpan="3" Margin="8,8,8,4" Stretch="Fill" Stroke="LightGray" X2="1"/>
-        <Grid Grid.Row="4" Grid.ColumnSpan="3" Margin="2,4,2,4">
+        <Line Grid.Row="3" Grid.ColumnSpan="2" Margin="8,8,8,4" Stretch="Fill" Stroke="LightGray" X2="1"/>
+        <Grid Grid.Row="4" Grid.ColumnSpan="2" Margin="2,4,2,4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <RibbonRadioButton Grid.Column="0" Grid.Row="0" Label="Suggest" ToolTip="Enter a sentence to advise Simple Markov what to say to ELIZA."
@@ -123,7 +122,6 @@
                           LargeImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png"
                           KeyTip="Feedback" />
 
-                <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="Enter a sentence to advise Simple Markov what to say to ELIZA." />
             <Grid Grid.Row="0" Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -132,19 +130,18 @@
                 <TextBox Name="SuggestionText" Text="{Binding Path=SuggestionText,UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TextWrapping="Wrap" KeyDown="TextBox_KeyDown" />
                 <Button Grid.Column="1" Content="Send" Width="80" Margin="2,2,2,2" Click="SendButton_Click" />
             </Grid>
-            <TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="Rate this interaction to let Simple Markov know how he did." />
-            <StackPanel Grid.Row="1" Grid.Column="2" Margin="40,0,0,0" Orientation="Horizontal" >
-                <Button Margin="4,4,4,4" Width="60" >
-                    <StackPanel>
-                        <Image Source="Images/craiyon_165216_A_group_of_emojis__br_.png" Height="64" Width="64"/>
-                        <Label Content="Love It" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button Margin="4,4,4,4" Width="60" Content="Hilarious" />
-                <Button Margin="4,4,4,4" Width="60" Content="Meh" />
-                <Button Margin="4,4,4,4" Width="60" Content="Crying" />
-                <Button Margin="4,4,4,4" Width="60" Content="WTF?" />
-            </StackPanel>
+            <ListBox Name="ReactionBox" Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" ItemsSource="{Binding ReactionButtons}" SelectedItem="{Binding SelectedReaction}" KeyDown="ReactionBox_KeyDown">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding ImageFile}" Height="64" Width="64"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         </Grid>            
     </Grid>
 </Window>

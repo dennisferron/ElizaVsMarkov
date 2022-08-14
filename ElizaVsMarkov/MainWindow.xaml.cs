@@ -47,5 +47,13 @@ namespace ElizaVsMarkov
                 chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
             }
         }
+
+        private void ReactionBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                viewModel.SendReaction();
+            }
+        }
     }
 }

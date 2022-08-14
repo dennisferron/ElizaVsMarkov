@@ -51,8 +51,9 @@ namespace ElizaVsMarkov.Markov
         {
             List<int> input_tokens = Learn(input, 1.0);
 
-            // First try to generate a sentence from the input, but different.
             const int MAX_TRIES = 100;
+
+            // First try to generate a sentence from the input, but different.
             for (int i=0; i < MAX_TRIES; i++)
             {
                 List<int> output_tokens = Generate(input_tokens).ToList();
@@ -69,7 +70,21 @@ namespace ElizaVsMarkov.Markov
                 return tokenizer.Detokenize(output_tokens);
             }
 
-            // If that doesn't work, just make something up.
+            // Next try making something up, but still check uniqueness and length.
+            for (int i = 0; i < MAX_TRIES; i++)
+            {
+                List<int> output_tokens = forward.WalkFromStart().ToList();
+
+                if (output_tokens.SequenceEqual(input_tokens))
+                    continue;
+
+                if (output_tokens.Count < 3 || output_tokens.Count > 16)
+                    continue;
+
+                return tokenizer.Detokenize(output_tokens);
+            }
+
+            // Otherwise just return anything at all.
             return tokenizer.Detokenize(forward.WalkFromStart());
         }
     }

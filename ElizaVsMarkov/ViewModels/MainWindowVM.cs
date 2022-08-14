@@ -17,28 +17,35 @@ namespace ElizaVsMarkov.ViewModels
 
         public MainWindowVM(string elizaScriptFile, string markovCorpusFile)
         {
+            ReactionButtons = new List<ReactionVM>
+            {
+                new ReactionVM(Reactions.LoveIt, "Images/craiyon_190726_LoveIt_emoji__br_.png"),
+                new ReactionVM(Reactions.Hilarious, "Images/craiyon_200908_laughin_emoji_br_.png"),
+                new ReactionVM(Reactions.Meh, "Images/craiyon_184522_Disinterested_emoji__br_.png"),
+                new ReactionVM(Reactions.Crying, "Images/craiyon_200016_crying_emoji_br_.png"),
+                new ReactionVM(Reactions.WTF, "Images/craiyon_190753_Shock_emoji__br_.png")
+            };
+
             string elizaJson = File.ReadAllText(elizaScriptFile);
             eliza = new ELIZALib(elizaJson);
 
             // Start (TODO: Let tutorial invoke this.)
             AddToLog("ELIZA", eliza.Session.GetGreeting());
 
-            var start = DateTime.Now;
             string[] training = File.ReadAllLines(markovCorpusFile);
             foreach (var line in training)
                 markov.Learn(line, 0.002);
-            var end = DateTime.Now;
-            var span = end - start;
-            AddToLog("System", String.Format("Loaded Markov training data in {0} seconds", span.TotalSeconds));
         }
 
         private void AddToLog(string user, string message)
         {
+            var reaction = ReactionButtons[ChatLog.Count % 5];
+
             ChatLog.Add(new ChatMessageVM
             {
                 User = user,
                 Message = message,
-                Reaction = ChatLog.Count % 2 == 0 ? Reactions.None : Reactions.Meh
+                Reaction = reaction
             }); 
         }
 
@@ -67,6 +74,33 @@ namespace ElizaVsMarkov.ViewModels
             SuggestionText = "";
             string elizaResult = eliza.GetResponse(markovResult);
             AddToLog("ELIZA", elizaResult);
+        }
+
+        public List<ReactionVM> ReactionButtons
+        {
+            get; private set;
+        }
+
+        private ReactionVM _selectedReaction;
+        public ReactionVM SelectedReaction
+        {
+            get { return _selectedReaction; }
+            set 
+            { 
+                if (_selectedReaction != value)
+                {
+                    _selectedReaction = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public void SendReaction()
+        {
+            var messageVM = ChatLog.LastOrDefault(a => a.User == "Markov");
+
+            if (messageVM != null)
+                messageVM.Reaction = SelectedReaction;
         }
     }
 }

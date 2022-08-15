@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ElizaVsMarkov"
         xmlns:viewmodels="clr-namespace:ElizaVsMarkov.ViewModels"
         mc:Ignorable="d"
-        Title="Robot Psychologist" Height="500" Width="800">
+        Title="Robot Psychologist" Height="500" Width="800" Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Window.Resources>
 
         <BeginStoryboard x:Key="BottomPanelStoryboardDown">
@@ -162,6 +162,23 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2" Grid.Column="0" Margin="4,4,4,4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Line Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="4,4,4,4" Stroke="DimGray" />
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Content="🎵 Music"  />
+            <Button Name="MusicOff" Margin="4,2,2,2" Grid.Row="2" Grid.Column="0" Content="OFF" Click="MusicOff_Click" />
+            <Button Name="MusicOn" Margin="0,2,2,2" Grid.Row="2" Grid.Column="1" Content="ON" Click="MusicOn_Click" />
+        </Grid>
+
         <Canvas Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Background="DimGray" DataContext="{Binding BetweenRatings}">
             <TextBlock Canvas.Top="0" Canvas.Left="50" Text="Good Reactions" FontWeight="ExtraBold" Foreground="YellowGreen" />
             <TextBlock Canvas.Top="230" Canvas.Left="58" Text="Bad Reactions" FontWeight="ExtraBold" Foreground="Tomato" />

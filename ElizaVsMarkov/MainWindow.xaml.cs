@@ -1,8 +1,12 @@
 ﻿using ElizaVsMarkov.ViewModels;
+using Melanchall.DryWetMidi.Common;
+using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -116,6 +120,55 @@ namespace ElizaVsMarkov
         {
             viewModel.HumanMessageCompleted();
             chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
+        }
+
+        Playback? _playback = null;
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var midiFile = MidiFile.Read("FloatOn.mid");
+
+                var outputDevice = OutputDevice.GetByName("Microsoft GS Wavetable Synth");
+
+                _playback = midiFile.GetPlayback(outputDevice);
+                _playback.Loop = true;
+                _playback.NotesPlaybackStarted += _playback_NotesPlaybackStarted;
+                //_playback.Start();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void _playback_NotesPlaybackStarted(object? sender, NotesEventArgs e)
+        {
+            foreach (var note in e.Notes)
+                if (note != null)
+                    note.Velocity = new SevenBitNumber(Convert.ToByte(Convert.ToInt16(note.Velocity) >> 4));
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_playback != null)
+            {
+                _playback.OutputDevice.Dispose();
+                _playback.Dispose();
+            }
+        }
+
+        private void MusicOff_Click(object sender, RoutedEventArgs e)
+        {
+            if (_playback != null)
+                _playback.Stop();
+        }
+
+        private void MusicOn_Click(object sender, RoutedEventArgs e)
+        {
+            if (_playback != null)
+                _playback.Start();
         }
     }
 }

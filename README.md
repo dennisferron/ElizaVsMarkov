@@ -48,10 +48,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
 * [README-Template](https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc)
-* [ELIZA.NET by Kris Craig] (https://github.com/sirkris/ELIZA.NET)
-* Markov chatbot original work by myself, Dennis Ferron
-* [Training corpus At the Mountains of Madness (public domain) by H.P. Lovecraft] (https://github.com/vilmibm/lovecraftcorpus)
-* [FloatOn.MID, author of arrangement unknown] (https://freemidi.org/download3-24471-float-on-modest-mouse)
-* [Most images generated using Craiyon image generator] (https://www.craiyon.com/)
+* [ELIZA.NET](https://github.com/sirkris/ELIZA.NET) by Kris Craig
+* Markov chatbot is original work by myself, Dennis Ferron
+* Training corpus [At_the_Mountains_of_Madness](https://github.com/vilmibm/lovecraftcorpus) (public domain) by H.P. Lovecraft 
+* FloatOn.MID from [freemidi.org](https://freemidi.org/download3-24471-float-on-modest-mouse), author of arrangement not credited by the site.
+* Most images generated using [Craiyon](https://www.craiyon.com/) image generator

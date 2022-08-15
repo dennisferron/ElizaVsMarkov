@@ -20,22 +20,22 @@ namespace ElizaVsMarkov.ViewModels
         {
             ReactionButtons = new List<ReactionVM>
             {
-                new ReactionVM(Reactions.LoveIt, "Images/craiyon_190726_LoveIt_emoji__br_.png"),
-                new ReactionVM(Reactions.Hilarious, "Images/craiyon_200908_laughin_emoji_br_.png"),
-                new ReactionVM(Reactions.Meh, "Images/craiyon_184522_Disinterested_emoji__br_.png"),
-                new ReactionVM(Reactions.Crying, "Images/sad_emoji.jpg"),
-                new ReactionVM(Reactions.WTF, "Images/craiyon_190753_Shock_emoji__br_.png")
+                new ReactionVM(Reactions.LoveIt, "Images/LoveIt_emoji.jpg"),
+                new ReactionVM(Reactions.Hilarious, "Images/Laughing_emoji.jpg"),
+                new ReactionVM(Reactions.Meh, "Images/Disinterested_emoji.jpg"),
+                new ReactionVM(Reactions.Crying, "Images/small_sad_emoji.jpg"),
+                new ReactionVM(Reactions.WTF, "Images/Shock_emoji.jpg")
             };
 
             string elizaJson = File.ReadAllText(elizaScriptFile);
             eliza = new ELIZALib(elizaJson);
 
-            // Start (TODO: Let tutorial invoke this.)
-            AddToLog("ELIZA", eliza.Session.GetGreeting());
-
             string[] training = File.ReadAllLines(markovCorpusFile);
             foreach (var line in training)
                 markov.Learn(line, 0.002);
+				
+            // Start (TODO: Let tutorial invoke this.)
+            AddToLog("ELIZA", eliza.Session.GetGreeting());
         }
 
         private void AddToLog(string user, string message)
@@ -80,14 +80,30 @@ namespace ElizaVsMarkov.ViewModels
         public bool IsSuggestionEnabled
         {
             get { return isSuggestionEnabled; }
-            set { isSuggestionEnabled = value; }
+            set 
+            {
+                if (isReactionEnabled != value)
+                {
+                    isSuggestionEnabled = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("SuggestionPanelOpacity");
+                }
+            }
         }
 
         private bool isReactionEnabled = false;
         public bool IsReactionEnabled
         {
             get { return isReactionEnabled; }
-            set { isReactionEnabled = value; }
+            set 
+            {
+                if (isReactionEnabled != value)
+                {
+                    isReactionEnabled = value;
+                    NotifyPropertyChanged();
+                    NotifyPropertyChanged("ReactionPanelOpacity");
+                }
+            }
         }
 
         public List<ReactionVM> ReactionButtons
@@ -205,6 +221,16 @@ namespace ElizaVsMarkov.ViewModels
                     }
                 }
             }
+        }
+
+        public double SuggestionPanelOpacity
+        {
+            get { return IsSuggestionEnabled ? 1.0 : 0.5; }
+        }
+
+        public double ReactionPanelOpacity
+        {
+            get { return IsReactionEnabled ? 1.0 : 0.5; }
         }
 
 

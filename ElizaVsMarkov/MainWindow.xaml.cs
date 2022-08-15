@@ -29,7 +29,7 @@ namespace ElizaVsMarkov
             InitializeComponent();
             viewModel = new MainWindowVM(
                 "DOCTOR.json",
-                "Corpus\\training.txt"
+                "training.txt"
             );
 
             viewModel.PropertyChanged += ViewModel_PropertyChanged;
@@ -67,6 +67,7 @@ namespace ElizaVsMarkov
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.SendSuggestionText();
+            viewModel.IsSuggestionEnabled = false;
             chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
         }
 
@@ -75,6 +76,7 @@ namespace ElizaVsMarkov
             if (e.Key == Key.Return)
             {
                 viewModel.SendSuggestionText();
+                viewModel.IsSuggestionEnabled = false;
                 chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
             }
         }
@@ -84,6 +86,7 @@ namespace ElizaVsMarkov
             if (e.Key == Key.Return)
             {
                 viewModel.SendReaction();
+                viewModel.IsReactionEnabled = false;
                 chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
             }
         }
@@ -91,6 +94,7 @@ namespace ElizaVsMarkov
         private void RateButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.SendReaction();
+            viewModel.IsReactionEnabled = false;
             chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
         }
 

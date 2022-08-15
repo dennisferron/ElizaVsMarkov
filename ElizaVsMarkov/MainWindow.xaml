@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ElizaVsMarkov"
         xmlns:viewmodels="clr-namespace:ElizaVsMarkov.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
+        Title="Robot Psychologist" Height="500" Width="800">
     <Window.Resources>
 
         <BeginStoryboard x:Key="BottomPanelStoryboardDown">
@@ -247,9 +247,10 @@
             />
 
         </Canvas>
-        <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" Source="pack://application:,,,/Images/craiyon_154508_A_man_whispering_to_a_robot__br_.png" />
+		<!-- Was: Source="pack://application:,,,/Images/A_man_whispering_to_a_robot.jpg" -->
+        <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" Source="Images/A_man_whispering_to_a_robot.jpg" />
         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Content="Simple Markov" />
-        <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="2" Source="pack://application:,,,/Images/ELIZA.gif" />
+        <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="2" Source="Images/ELIZA.gif" />
         <Label Content="ELIZA" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" />
         <ListView Name="chatLogView" ItemsSource="{Binding ChatLog}" Grid.Column="1" Grid.RowSpan="3" BorderBrush="Gray" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
@@ -270,7 +271,7 @@
                     <RowDefinition Height="100" />
                     <RowDefinition Height="100" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Opacity="{Binding SuggestionPanelOpacity}">
                     <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
@@ -281,15 +282,15 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                         <RibbonRadioButton Grid.Column="0" Grid.Row="1" Label="Suggest" 
-                              SmallImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png" 
-                              LargeImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png"
+                              SmallImageSource="Images/right_arrow_icon.jpg" 
+                              LargeImageSource="Images/right_arrow_icon.jpg"
                               KeyTip="Suggest" />
 
                         <Label Grid.Row="0" Grid.Column="1" Content="Type a sentence to whisper to Simple Markov as a reply to ELIZA." />
                     <TextBox Grid.Column="1" Grid.Row="1" Name="SuggestionText" Text="{Binding Path=SuggestionText,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" KeyDown="TextBox_KeyDown" />
                     <Button Grid.Row="1" Grid.Column="2" Content="Send" Width="60" Margin="2,2,2,2" Click="SendButton_Click" />
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Opacity="{Binding ReactionPanelOpacity}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
@@ -301,8 +302,8 @@
                         </Grid.ColumnDefinitions>
 
                         <RibbonRadioButton Grid.Column="0" Grid.Row="1" Label="Feedback" 
-                              SmallImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png" 
-                              LargeImageSource="Images/craiyon_165216_A_group_of_emojis__br_.png"
+                              SmallImageSource="Images/group_of_emojis.jpg" 
+                              LargeImageSource="Images/group_of_emojis.jpg"
                               KeyTip="Feedback" />
 
                         <Label Grid.Row="0" Grid.Column="1" Content="Select a reaction to let Simple Markov know how (in)appropriate its response was." />

@@ -8,17 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\A_man_whispering_to_a_robot.jpg" />
     <None Remove="Images\ASCII_art_woman_flipping_off.PNG" />
-    <None Remove="Images\craiyon_154508_A_man_whispering_to_a_robot__br_.png" />
-    <None Remove="Images\craiyon_164350_Icon__right_arrow__br_.png" />
-    <None Remove="Images\craiyon_165216_A_group_of_emojis__br_.png" />
-    <None Remove="Images\craiyon_184522_Disinterested_emoji__br_.png" />
-    <None Remove="Images\craiyon_190726_LoveIt_emoji__br_.png" />
-    <None Remove="Images\craiyon_190753_Shock_emoji__br_.png" />
-    <None Remove="Images\craiyon_200016_crying_emoji_br_.png" />
-    <None Remove="Images\craiyon_200908_laughin_emoji_br_.png" />
+    <None Remove="Images\Disinterested_emoji.jpg" />
     <None Remove="Images\ELIZA.gif" />
-    <None Remove="Images\sad_emoji.jpg" />
+    <None Remove="Images\group_of_emojis.jpg" />
+    <None Remove="Images\Laughing_emoji.jpg" />
+    <None Remove="Images\LoveIt_emoji.jpg" />
+    <None Remove="Images\right_arrow_icon.jpg" />
+    <None Remove="Images\Shock_emoji.jpg" />
+    <None Remove="Images\small_sad_emoji.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,26 +25,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\A_man_whispering_to_a_robot.jpg" />
     <Resource Include="Images\ASCII_art_woman_flipping_off.PNG" />
-    <Resource Include="Images\craiyon_154508_A_man_whispering_to_a_robot__br_.png" />
-    <Resource Include="Images\craiyon_164350_Icon__right_arrow__br_.png" />
-    <Resource Include="Images\craiyon_165216_A_group_of_emojis__br_.png" />
-    <Resource Include="Images\craiyon_184522_Disinterested_emoji__br_.png" />
-    <Resource Include="Images\craiyon_190726_LoveIt_emoji__br_.png" />
-    <Resource Include="Images\craiyon_190753_Shock_emoji__br_.png" />
-    <Resource Include="Images\craiyon_200016_crying_emoji_br_.png" />
-    <Resource Include="Images\craiyon_200908_laughin_emoji_br_.png" />
-    <Resource Include="Images\ELIZA.gif">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\sad_emoji.jpg" />
+    <Resource Include="Images\Disinterested_emoji.jpg" />
+    <Resource Include="Images\ELIZA.gif" />
+    <Resource Include="Images\group_of_emojis.jpg" />
+    <Resource Include="Images\Laughing_emoji.jpg" />
+    <Resource Include="Images\LoveIt_emoji.jpg" />
+    <Resource Include="Images\right_arrow_icon.jpg" />
+    <Resource Include="Images\Shock_emoji.jpg" />
+    <Resource Include="Images\small_sad_emoji.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Corpus\At_the_Mountains_of_Madness-Lovecraft.txt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="Corpus\training.txt">
+    <None Update="training.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -34,7 +34,7 @@ namespace ElizaVsMarkov.ViewModels
                 case Reactions.Hilarious:
                     return 0.9;
                 case Reactions.Meh:
-                    return 0.0;
+                    return -0.1;
                 case Reactions.Crying:
                     return -0.9;
                 case Reactions.WTF:
@@ -99,7 +99,7 @@ namespace ElizaVsMarkov.ViewModels
 
             // Bottom
             double bot_len =  last_len / 2.0;
-            pc.Add(new Point(0, OriginY + last_len));
+            pc.Add(new Point(0, OriginY + bot_len));
 
 
             this.Points = pc;

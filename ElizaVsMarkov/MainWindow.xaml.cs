@@ -84,24 +84,28 @@ namespace ElizaVsMarkov
             if (e.Key == Key.Return)
             {
                 viewModel.SendReaction();
+                chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
             }
         }
 
         private void RateButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.SendReaction();
+            chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
         }
 
         private void MarkovMessageStoryboard_Completed(object sender, EventArgs e)
         {
             viewModel.MarkovMessageCompleted();
             chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
+            ReactionBox.Focus();
         }
 
         private void ElizaMessageStoryboard_Completed(object sender, EventArgs e)
         {
             viewModel.ElizaMessageCompleted();
             chatLogView.ScrollIntoView(viewModel.ChatLog.Last());
+            SuggestionText.Focus();
         }
 
         private void HumanMessageStoryboard_Completed(object sender, EventArgs e)

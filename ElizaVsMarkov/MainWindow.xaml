@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ElizaVsMarkov"
         xmlns:viewmodels="clr-namespace:ElizaVsMarkov.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Window.Resources>
 
         <BeginStoryboard x:Key="BottomPanelStoryboardDown">
@@ -41,13 +41,13 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ELIZAMessage" DataType="{x:Type viewmodels:ChatMessageVM}">
-            <Grid Name="ChatMessageGrid"  HorizontalAlignment="Right" Background="PapayaWhip">
+            <Grid Name="ChatMessageGrid"  HorizontalAlignment="Right" Background="PapayaWhip" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{Binding User}" />
-                <TextBlock Name="ChatMessageTextBlock" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Message}"  />
+                <TextBlock Grid.Row="0" Text="{Binding User}" HorizontalAlignment="Right" />
+                <TextBlock Name="ChatMessageTextBlock" Grid.Row="1" TextWrapping="Wrap" Text="{Binding AnimatedMessage}" MinWidth="100" />
                 <Grid.Triggers>
                     <EventTrigger RoutedEvent="Grid.Loaded">
                         <BeginStoryboard>
@@ -55,21 +55,13 @@
                                 <DoubleAnimation
                                     Storyboard.TargetName="ChatMessageGrid" 
                                     Storyboard.TargetProperty="Opacity"
-                                    From="0.0" To="1.0" Duration="0:0:2.5"                                     
+                                    From="0.0" To="1.0" Duration="0:0:1.6"                                     
                                 />
-                                <StringAnimationUsingKeyFrames 
-                Storyboard.TargetName="ChatMessageTextBlock" Storyboard.TargetProperty="(TextBlock.Text)"
-                Duration="0:0:0.6" FillBehavior="HoldEnd" RepeatBehavior="3x" >
-
-                                    <!-- All the key frames below are DiscreteStringKeyFrames. Discrete key frames create 
-                sudden "jumps" between values (no interpolation). Only discrete key frames can be used 
-                for String key frame animations. -->
-                                    <DiscreteStringKeyFrame Value="" KeyTime="0:0:0" />
-                                    <DiscreteStringKeyFrame Value="." KeyTime="0:0:0.15" />
-                                    <DiscreteStringKeyFrame Value=".." KeyTime="0:0:0.30" />
-                                    <DiscreteStringKeyFrame Value="..." KeyTime="0:0:0.45" />
-                                    <DiscreteStringKeyFrame Value="{Binding Message}" KeyTime="0:0:0.6" />
-                                </StringAnimationUsingKeyFrames>
+                                <DoubleAnimation
+                                    Storyboard.Target="{Binding .}" 
+                                    Storyboard.TargetProperty="TypingProgress"
+                                    From="0.0" To="1.0" Duration="{Binding TypingAnimationTime}"                                     
+                                />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -170,6 +162,91 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Canvas Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Background="DimGray" DataContext="{Binding BetweenRatings}">
+            <TextBlock Canvas.Top="0" Canvas.Left="50" Text="Good Reactions" FontWeight="ExtraBold" Foreground="YellowGreen" />
+            <TextBlock Canvas.Top="230" Canvas.Left="58" Text="Bad Reactions" FontWeight="ExtraBold" Foreground="Tomato" />
+            <Path Stroke="WhiteSmoke" StrokeThickness="1">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigureCollection>
+                                <PathFigure StartPoint="0,110">
+                                    <PathFigure.Segments>
+                                        <PathSegmentCollection>
+                                            <ArcSegment Size="1,1" SweepDirection="Clockwise" Point="0,150" />
+                                        </PathSegmentCollection>
+                                    </PathFigure.Segments>
+                                </PathFigure>
+                                <PathFigure StartPoint="0,80">
+                                    <PathFigure.Segments>
+                                        <PathSegmentCollection>
+                                            <ArcSegment Size="1,1" SweepDirection="Clockwise" Point="0,175" />
+                                        </PathSegmentCollection>
+                                    </PathFigure.Segments>
+                                </PathFigure>
+                                <PathFigure StartPoint="0,50">
+                                    <PathFigure.Segments>
+                                        <PathSegmentCollection>
+                                            <ArcSegment Size="1,1" SweepDirection="Clockwise" Point="0,200" />
+                                        </PathSegmentCollection>
+                                    </PathFigure.Segments>
+                                </PathFigure>
+                                <PathFigure StartPoint="0,20">
+                                    <PathFigure.Segments>
+                                        <PathSegmentCollection>
+                                            <ArcSegment Size="1,1" SweepDirection="Clockwise" Point="0,225" />
+                                        </PathSegmentCollection>
+                                    </PathFigure.Segments>
+                                </PathFigure>
+
+                            </PathFigureCollection>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+
+            <Polyline Name="between0_1" 
+                      Stroke="Black" StrokeThickness="2" Fill="CadetBlue" Opacity="0.2" Points="{Binding Points}">
+            </Polyline>
+            
+            
+
+            <Line Name="ratingLine1" DataContext="{Binding RatingLine1}" 
+                  X1="{Binding X1}" Y1="{Binding Y1}"
+                  X2="{Binding X2}" Y2="{Binding Y2}"
+                Stroke="PaleVioletRed"
+                StrokeThickness="4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"                
+            />
+
+            <Line Name="ratingLine2" DataContext="{Binding RatingLine2}" 
+                  X1="{Binding X1}" Y1="{Binding Y1}"
+                  X2="{Binding X2}" Y2="{Binding Y2}"
+                Stroke="PaleGoldenrod"
+                StrokeThickness="4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"                
+            />
+
+            <Line Name="ratingLine3" DataContext="{Binding RatingLine3}" 
+                  X1="{Binding X1}" Y1="{Binding Y1}"
+                  X2="{Binding X2}" Y2="{Binding Y2}"
+                Stroke="PaleGreen"
+                StrokeThickness="4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"                
+            />
+
+            <Line Name="ratingLine4" DataContext="{Binding RatingLine4}" 
+                  X1="{Binding X1}" Y1="{Binding Y1}"
+                  X2="{Binding X2}" Y2="{Binding Y2}"
+                Stroke="PaleTurquoise"
+                StrokeThickness="4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"                
+            />
+
+            <Line Name="ratingLine5" DataContext="{Binding RatingLine5}" 
+                  X1="{Binding X1}" Y1="{Binding Y1}"
+                  X2="{Binding X2}" Y2="{Binding Y2}"
+                Stroke="Thistle"
+                StrokeThickness="4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"                
+            />
+
+        </Canvas>
         <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="0" Source="pack://application:,,,/Images/craiyon_154508_A_man_whispering_to_a_robot__br_.png" />
         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Content="Simple Markov" />
         <Image Grid.Row="0" HorizontalAlignment="Center" Grid.Column="2" Source="pack://application:,,,/Images/ELIZA.gif" />
@@ -208,7 +285,7 @@
                               LargeImageSource="Images/craiyon_164350_Icon__right_arrow__br_.png"
                               KeyTip="Suggest" />
 
-                        <Label Grid.Row="0" Grid.Column="1" Content="Type a sentence to whisper to Simple Markov to suggest a reply to ELIZA." />
+                        <Label Grid.Row="0" Grid.Column="1" Content="Type a sentence to whisper to Simple Markov as a reply to ELIZA." />
                     <TextBox Grid.Column="1" Grid.Row="1" Name="SuggestionText" Text="{Binding Path=SuggestionText,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" KeyDown="TextBox_KeyDown" />
                     <Button Grid.Row="1" Grid.Column="2" Content="Send" Width="60" Margin="2,2,2,2" Click="SendButton_Click" />
                 </Grid>

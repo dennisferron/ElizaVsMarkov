@@ -64,8 +64,6 @@ namespace ElizaVsMarkov.ViewModels
             }
         }
 
-        private double _typingProgress = 0.0;
-
         public string AnimatedMessage
         {
             get
@@ -87,7 +85,7 @@ namespace ElizaVsMarkov.ViewModels
             set { SetValue(TypingProgressProperty, value); }
         }
         public static readonly DependencyProperty TypingProgressProperty =
-            DependencyProperty.Register("TypingProgress", typeof(double), typeof(ChatMessageVM), new PropertyMetadata(0D, OnTypingProgressChangedCallBack)
+            DependencyProperty.Register("TypingProgress", typeof(double), typeof(ChatMessageVM), new PropertyMetadata(1D, OnTypingProgressChangedCallBack)
            );
 
         private static void OnTypingProgressChangedCallBack(

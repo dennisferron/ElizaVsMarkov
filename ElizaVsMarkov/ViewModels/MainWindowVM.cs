@@ -23,7 +23,7 @@ namespace ElizaVsMarkov.ViewModels
                 new ReactionVM(Reactions.LoveIt, "Images/craiyon_190726_LoveIt_emoji__br_.png"),
                 new ReactionVM(Reactions.Hilarious, "Images/craiyon_200908_laughin_emoji_br_.png"),
                 new ReactionVM(Reactions.Meh, "Images/craiyon_184522_Disinterested_emoji__br_.png"),
-                new ReactionVM(Reactions.Crying, "Images/craiyon_200016_crying_emoji_br_.png"),
+                new ReactionVM(Reactions.Crying, "Images/sad_emoji.jpg"),
                 new ReactionVM(Reactions.WTF, "Images/craiyon_190753_Shock_emoji__br_.png")
             };
 
@@ -67,8 +67,27 @@ namespace ElizaVsMarkov.ViewModels
 
         public void SendSuggestionText()
         {
-            AddToLog("Human", SuggestionText);
-            SuggestionText = "";
+            if (IsSuggestionEnabled)
+            {
+                AddToLog("Human", SuggestionText);
+                SuggestionText = "";
+                IsSuggestionEnabled = false;
+                IsReactionEnabled = true;
+            }
+        }
+
+        private bool isSuggestionEnabled = true;
+        public bool IsSuggestionEnabled
+        {
+            get { return isSuggestionEnabled; }
+            set { isSuggestionEnabled = value; }
+        }
+
+        private bool isReactionEnabled = false;
+        public bool IsReactionEnabled
+        {
+            get { return isReactionEnabled; }
+            set { isReactionEnabled = value; }
         }
 
         public List<ReactionVM> ReactionButtons
@@ -82,23 +101,40 @@ namespace ElizaVsMarkov.ViewModels
             get { return _selectedReaction; }
             set 
             { 
-                if (_selectedReaction != value)
+                if (_selectedReaction != value && IsReactionEnabled)
                 {
                     _selectedReaction = value;
                     NotifyPropertyChanged();
+
+                    // Also display the selection on the message so we can see it update in realtime.
+                    var markovMsg = ChatLog.LastOrDefault(a => a.User == "Markov");
+                    if (markovMsg != null)
+                    {
+                        markovMsg.Reaction = value;
+                    }
                 }
             }
         }
 
         public void SendReaction()
         {
-            var messageVM = ChatLog.LastOrDefault(a => a.User == "Markov");
+            if (IsReactionEnabled)
+            {
+                var messageVM = ChatLog.LastOrDefault(a => a.User == "Markov");
 
-            if (messageVM != null)
-                messageVM.Reaction = SelectedReaction;
+                if (messageVM != null)
+                    messageVM.Reaction = SelectedReaction;
 
-            // TODO: Add animation to trigger this.
-            ReactionCompleted();
+                BetweenRatings.AddRating(SelectedReaction.Reaction);
+
+                IsSuggestionEnabled = true;
+                IsReactionEnabled = false;
+
+                ReactionCompleted();
+
+                // Clear any previous text.
+                SuggestionText = "";
+            }
         }
 
         public void ReactionCompleted()
@@ -156,9 +192,29 @@ namespace ElizaVsMarkov.ViewModels
                 {
                     bottomPanelMode = value;
                     NotifyPropertyChanged();
+
+                    if (bottomPanelMode == 0)
+                    {
+                        IsSuggestionEnabled = true;
+                        IsReactionEnabled = false;
+                    }
+                    else 
+                    {
+                        IsSuggestionEnabled = false;
+                        IsReactionEnabled = true;
+                    }
                 }
             }
         }
 
+
+        #region Between Rating Lines
+        public BetweenRatingVM BetweenRatings
+        {
+            get; private set;
+        } = new BetweenRatingVM();
+        #endregion
     }
 }
+
+

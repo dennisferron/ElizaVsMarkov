@@ -18,6 +18,7 @@
     <None Remove="Images\craiyon_200016_crying_emoji_br_.png" />
     <None Remove="Images\craiyon_200908_laughin_emoji_br_.png" />
     <None Remove="Images\ELIZA.gif" />
+    <None Remove="Images\sad_emoji.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,7 @@
     <Resource Include="Images\ELIZA.gif">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\sad_emoji.jpg" />
   </ItemGroup>
 
   <ItemGroup>
